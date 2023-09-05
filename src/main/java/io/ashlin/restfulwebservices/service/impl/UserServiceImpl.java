@@ -2,6 +2,7 @@ package io.ashlin.restfulwebservices.service.impl;
 
 import io.ashlin.restfulwebservices.dto.UserDto;
 import io.ashlin.restfulwebservices.entity.User;
+import io.ashlin.restfulwebservices.mapper.UserMapper;
 import io.ashlin.restfulwebservices.repository.UserRepository;
 import io.ashlin.restfulwebservices.service.UserService;
 import lombok.AllArgsConstructor;
@@ -16,22 +17,12 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     @Override
     public UserDto createUser(UserDto userDto){
-        //Convert UserDto to User JPA entity
-        User user=new User(
-                userDto.getId(),
-                userDto.getFirstName(),
-                userDto.getLastName(),
-                userDto.getEmail()
-        );
+        //DTO to JPA
+        User user= UserMapper.maptoUser(userDto);
         User savedUser= userRepository.save(user);
 
-        //Convert User JPA entity to UserDto
-        UserDto savedUserDto=new UserDto(
-                savedUser.getId(),
-                savedUser.getFirstName(),
-                savedUser.getLastName(),
-                savedUser.getEmail()
-        );
+        //JPA to DTO
+        UserDto savedUserDto=UserMapper.mapToUserDto(savedUser);
         return savedUserDto;
     }
 
