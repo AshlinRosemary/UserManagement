@@ -22,20 +22,20 @@ public class UserController {
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
     @GetMapping("{id}")
-    public ResponseEntity<User> getUserById(@PathVariable("id") Long userId){
-        User userIs=userService.getUserByID(userId);
-        return new ResponseEntity<>(userIs ,HttpStatus.OK);
+    public ResponseEntity<UserDto> getUserById(@PathVariable("id") Long userId){
+        UserDto user=userService.getUserByID(userId);
+        return new ResponseEntity<>(user ,HttpStatus.OK);
     }
     @GetMapping("/all")
-    public ResponseEntity<List<User>> getAllUsers(){
-        List<User> users=userService.getAllUsers();
+    public ResponseEntity<List<UserDto>> getAllUsers(){
+        List<UserDto > users=userService.getAllUsers();
         return new ResponseEntity<>(users,HttpStatus.OK) ;
     }
     @PutMapping("{id}")
-    public ResponseEntity<User> updateUser(@PathVariable("id") Long userId,
-                                           @RequestBody User user){
+    public ResponseEntity<UserDto> updateUser(@PathVariable("id") Long userId,
+                                           @RequestBody UserDto user){
         user.setId(userId);
-        User updatedUser=userService.updateUser(user);
+        UserDto updatedUser=userService.updateUser(user);
         return new ResponseEntity<>(updatedUser,HttpStatus.OK);
     }
     @DeleteMapping("{id}")
