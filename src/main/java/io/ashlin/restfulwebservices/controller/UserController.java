@@ -1,6 +1,7 @@
 package io.ashlin.restfulwebservices.controller;
 
 
+import io.ashlin.restfulwebservices.dto.UserDto;
 import io.ashlin.restfulwebservices.entity.User;
 import io.ashlin.restfulwebservices.service.UserService;
 import lombok.AllArgsConstructor;
@@ -16,8 +17,8 @@ import java.util.List;
 public class UserController {
     private UserService userService;
     @PostMapping("/create")
-    public ResponseEntity<User> CreateUser(@RequestBody User user){
-        User savedUser=userService.createUser(user);
+    public ResponseEntity<UserDto> CreateUser(@RequestBody UserDto user){
+        UserDto savedUser=userService.createUser(user);
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
     @GetMapping("{id}")
