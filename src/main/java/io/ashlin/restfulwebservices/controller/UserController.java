@@ -3,12 +3,16 @@ package io.ashlin.restfulwebservices.controller;
 
 import io.ashlin.restfulwebservices.dto.UserDto;
 import io.ashlin.restfulwebservices.entity.User;
+import io.ashlin.restfulwebservices.exception.ErrorDetails;
+import io.ashlin.restfulwebservices.exception.ResourceNotFoundException;
 import io.ashlin.restfulwebservices.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -43,5 +47,15 @@ public class UserController {
         userService.deleteUser(userId);
         return new ResponseEntity<>("Deleted user with given ID",HttpStatus.OK);
     }
-
+/*@ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ErrorDetails> handleResourceNotFoundException(
+            ResourceNotFoundException exception, WebRequest webRequest){
+        ErrorDetails errorDetails=new ErrorDetails(
+                LocalDateTime.now(),
+                exception.getMessage(),
+                webRequest.getDescription(false),
+                "User_NOT_Found"
+        );
+    return new ResponseEntity<>(errorDetails,HttpStatus.NOT_FOUND);
+    }*/
 }
