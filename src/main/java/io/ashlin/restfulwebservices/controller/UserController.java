@@ -6,6 +6,7 @@ import io.ashlin.restfulwebservices.entity.User;
 import io.ashlin.restfulwebservices.exception.ErrorDetails;
 import io.ashlin.restfulwebservices.exception.ResourceNotFoundException;
 import io.ashlin.restfulwebservices.service.UserService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ import java.util.List;
 public class UserController {
     private UserService userService;
     @PostMapping("/create")
-    public ResponseEntity<UserDto> CreateUser(@RequestBody UserDto user){
+    public ResponseEntity<UserDto> CreateUser(@Valid @RequestBody UserDto user){
         UserDto savedUser=userService.createUser(user);
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
@@ -37,7 +38,7 @@ public class UserController {
     }
     @PutMapping("{id}")
     public ResponseEntity<UserDto> updateUser(@PathVariable("id") Long userId,
-                                           @RequestBody UserDto user){
+                                           @Valid@RequestBody UserDto user){
         user.setId(userId);
         UserDto updatedUser=userService.updateUser(user);
         return new ResponseEntity<>(updatedUser,HttpStatus.OK);
